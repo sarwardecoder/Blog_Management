@@ -1,52 +1,56 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-6">Register</h1>
-    
-    <form @submit.prevent="submitRegister" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Username</label>
-        <input 
-          v-model="form.username" 
-          type="text" 
-          name="username"
-          class="w-full border p-2 rounded" 
-          required
-        >
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h1 class="h2 mb-4">Register</h1>
+        
+        <form @submit.prevent="submitRegister" class="card p-4 shadow-sm">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input 
+              v-model="form.username" 
+              type="text" 
+              name="username"
+              class="form-control" 
+              required
+            >
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input 
+              v-model="form.email" 
+              type="email" 
+              name="email"
+              class="form-control" 
+              required
+            >
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input 
+              v-model="form.password" 
+              type="password" 
+              name="password"
+              class="form-control" 
+              required
+            >
+          </div>
+          
+          <button 
+            type="submit" 
+            class="btn btn-primary w-100"
+          >
+            Register
+          </button>
+          
+          <div v-if="error" class="alert alert-danger mt-3">
+            {{ error }}
+          </div>
+        </form>
       </div>
-      
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Email</label>
-        <input 
-          v-model="form.email" 
-          type="email" 
-          name="email"
-          class="w-full border p-2 rounded" 
-          required
-        >
-      </div>
-      
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Password</label>
-        <input 
-          v-model="form.password" 
-          type="password" 
-          name="password"
-          class="w-full border p-2 rounded" 
-          required
-        >
-      </div>
-      
-      <button 
-        type="submit" 
-        class="bg-blue-500 text-white px-4 py-2 rounded w-full"
-      >
-        Register
-      </button>
-      
-      <div v-if="error" class="mt-4 text-red-500">
-        {{ error }}
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 

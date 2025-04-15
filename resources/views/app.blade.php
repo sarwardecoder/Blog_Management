@@ -4,32 +4,63 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Blog Management</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Scripts and Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+    @vite(['resources/js/app.js'])
+    @inertiaHead
 </head>
 
-<body class="antialiased bg-gray-100">
-    <div id="app">
-        <header class="bg-white shadow-sm">
-            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-                <div class="flex items-center">
-                    <img src="{{ asset('images/logo.svg') }}" alt="Blog Logo" class="h-10 mr-4">
-                    <h1 class="text-xl font-semibold text-gray-800">Blog Management</h1>
-                </div>
-                <nav class="flex items-center space-x-6">
-                    <a href="{{ route('dashboard') }}" class="text-gray-600 hover:text-gray-900">Dashboard ({{ route('dashboard') }})</a>
-                    <a href="{{ url('/posts') }}" class="text-gray-600 hover:text-gray-900">Posts (/posts)</a>
-                    <a href="{{ url('/search') }}" class="text-gray-600 hover:text-gray-900">Search (/search)</a>
-                    <a href="{{ url('/categories') }}" class="text-gray-600 hover:text-gray-900">Categories (/categories)</a>
-                    <a href="{{ url('/notifications') }}" class="text-gray-600 hover:text-gray-900">Notifications (/notifications)</a>
-                </nav>
-            </div>
-        </header>
-        <main class="container mx-auto py-4">
-            @inertia
-        </main>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.svg" alt="Logo" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                Blog Management
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+
+                <InertiaLink href="/auth/login">Login</InertiaLink>
+                <InertiaLink href="/auth/register">Login</InertiaLink>
+
+
+                <span class="navbar-toggler-icon">
+
+                </span>
+            </button>
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Create Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Create Tags</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        @inertia
+
     </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container text-center text-white">
+            <span>&copy; {{ date('Y') }} Blog Management. All rights reserved.</span>
+        </div>
+    </footer>
 </body>
 
 </html>

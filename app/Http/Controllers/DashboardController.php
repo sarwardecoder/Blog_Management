@@ -14,6 +14,8 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
+
+
     public function index()
     {
         // Fetch statistics
@@ -34,7 +36,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Pages/Dashboard', [
             'totalPosts' => $totalPosts,
             'totalComments' => $totalComments,
             'totalBookmarks' => $totalBookmarks,

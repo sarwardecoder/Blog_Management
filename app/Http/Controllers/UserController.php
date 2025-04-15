@@ -29,9 +29,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render("User/Create");
+        //register a user
+        return Inertia::render('User/Create');
     }
-
+      
     /**
      * Store a newly created resource in storage.
      */

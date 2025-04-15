@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto p-4">
         <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
-        
+         
         <!-- Statistics Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div class="bg-white p-4 rounded-lg shadow">
@@ -53,57 +53,57 @@
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            stats: {
-                total_posts: 0,
-                total_categories: 0,
-                total_users: 0,
-                total_comments: 0
-            },
-            recentActivities: [],
-            recentPosts: []
-        };
-    },
-    methods: {
-        async fetchStats() {
-            try {
-                const response = await fetch('/api/dashboard/stats');
-                const data = await response.json();
-                this.stats = data;
-            } catch (error) {
-                console.error('Error fetching stats:', error);
-            }
-        },
-        async fetchRecentActivities() {
-            try {
-                const response = await fetch('/api/dashboard/activities');
-                const data = await response.json();
-                this.recentActivities = data;
-            } catch (error) {
-                console.error('Error fetching activities:', error);
-            }
-        },
-        async fetchRecentPosts() {
-            try {
-                const response = await fetch('/api/dashboard/posts');
-                const data = await response.json();
-                this.recentPosts = data;
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        },
-        formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString(undefined, options);
-        }
-    },
-    mounted() {
-        this.fetchStats();
-        this.fetchRecentActivities();
-        this.fetchRecentPosts();
-    }
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const stats = ref({
+  total_posts: 0,
+  total_categories: 0,
+  total_users: 0,
+  total_comments: 0
+});
+
+const recentActivities = ref([]);
+const recentPosts = ref([]);
+
+const fetchStats = async () => {
+  try {
+    const response = await fetch('/api/dashboard/stats');
+    const data = await response.json();
+    stats.value = data;
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+  }
 };
+
+const fetchRecentActivities = async () => {
+  try {
+    const response = await fetch('/api/dashboard/activities');
+    const data = await response.json();
+    recentActivities.value = data;
+  } catch (error) {
+    console.error('Error fetching activities:', error);
+  }
+};
+
+const fetchRecentPosts = async () => {
+  try {
+    const response = await fetch('/api/dashboard/posts');
+    const data = await response.json();
+    recentPosts.value = data;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+  }
+};
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
+onMounted(() => {
+  fetchStats();
+  fetchRecentActivities();
+  fetchRecentPosts();
+});
 </script>

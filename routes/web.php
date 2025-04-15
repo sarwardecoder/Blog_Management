@@ -11,10 +11,14 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 
 // Public routes
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-Route::match(['get', 'post'], '/register', [UserController::class, 'userRegistration']);
-Route::match([ 'get','post'], '/store', [UserController::class, 'store']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::post('/login', [UserController::class, 'userLogin']);
+
+Route::get('/register', [UserController::class, 'create'])->name('register');
+Route::post('/register', [UserController::class, 'store']);
+
+
 
 // Protected routes
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
