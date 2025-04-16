@@ -1,23 +1,40 @@
+<script setup>
+import {Link, router, useForm, usePage} from "@inertiajs/vue3"
+import {createToaster} from "@meforma/vue-toaster"
+const toaster = createToaster({position:"top-right"});
+const form = useForm({
+email:"",
+password:""
+});
+function submit(){
+  if(form.email.length===0){
+toaster.warning("email is required.");
+  }else if(form.password.length===0){
+toaster.warning("password is required.");
+  
+}else{
+  form.post("/Login",{
+    onSuccess(){
+       if(){
+        toaster.success("Login Successful");
+        router.get("/Dashboard");
+       }
+    }
+  })
+}
+
+</script>
+
 <template>
-  <div class="container py-4">
+ <div class="container py-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h1 class="h2 mb-4">Edit User</h1>
+        <h1 class="h2 mb-4">Login here</h1>
         <div v-if="successMessage" class="alert alert-success mb-4">
           {{ successMessage }}
         </div>
         <form @submit.prevent="submit" class="mb-3">
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input 
-              id="username" 
-              v-model="form.username" 
-              type="text" 
-              class="form-control" 
-              required 
-            />
-            <div v-if="errors.username" class="text-danger small mt-1">{{ errors.username }}</div>
-          </div>
+         
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input 
@@ -36,57 +53,36 @@
               v-model="form.password" 
               type="password" 
               class="form-control" 
-              placeholder="Leave blank to keep current password"
+              required 
+              minlength="8" 
             />
             <div v-if="errors.password" class="text-danger small mt-1">{{ errors.password }}</div>
+          </div>
+          <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirm Password</label>
+            <input 
+              id="password_confirmation" 
+              v-model="form.password_confirmation" 
+              type="password" 
+              class="form-control" 
+              required 
+              minlength="8" 
+            />
           </div>
           <button 
             type="submit" 
             :disabled="form.processing" 
             class="btn btn-primary w-100"
           >
-            <span v-if="form.processing">Updating...</span>
-            <span v-else>Update</span>
+            <span v-if="form.processing">Login in process...</span>
+            <span v-else>Login</span>
           </button>
         </form>
       </div>
     </div>
-  </div>
+  </div>    
 </template>
 
-<script setup>
-import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
-
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true
-  }
-});
-
-const successMessage = ref('');
-const form = useForm({
-  username: props.user.username,
-  email: props.user.email,
-  password: ''
-});
-
-const submit = () => {
-  form.put(`/users/${props.user.id}`, {
-    onSuccess: () => {
-      successMessage.value = 'User updated successfully!';
-    },
-    onError: () => {
-      successMessage.value = '';
-    }
-  });
-};
-</script>
-
 <style scoped>
-.error {
-  color: red;
-  font-size: 0.8rem;
-}
+
 </style>

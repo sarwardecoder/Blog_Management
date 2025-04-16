@@ -36,7 +36,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return Inertia::render('Pages/Dashboard', [
+        return Inertia::render('Dashboard', [
             'totalPosts' => $totalPosts,
             'totalComments' => $totalComments,
             'totalBookmarks' => $totalBookmarks,

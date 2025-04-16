@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\URL;
+use Inertia\Inertia;
 
 
 class PostController extends Controller
@@ -31,6 +32,10 @@ class PostController extends Controller
             ], 500);
         }
     }
+    public function createPost()
+    {
+        return Inertia::render('Pages/posts');
+    }
 
     public function store(Request $request)
     {
@@ -38,7 +43,7 @@ class PostController extends Controller
             // Verify JWT token
             $token = $request->cookie('token');
             $decoded = JWTToken::verifyToken($token);
-            
+
             if ($decoded === "unauthorized") {
                 return response()->json([
                     'status' => 'failed',
@@ -103,7 +108,7 @@ class PostController extends Controller
             // Verify JWT token
             $token = $request->cookie('token');
             $decoded = JWTToken::verifyToken($token);
-            
+
             if ($decoded === "unauthorized") {
                 return response()->json([
                     'status' => 'failed',
@@ -161,7 +166,7 @@ class PostController extends Controller
             // Verify JWT token
             $token = $request->cookie('token');
             $decoded = JWTToken::verifyToken($token);
-            
+
             if ($decoded === "unauthorized") {
                 return response()->json([
                     'status' => 'failed',

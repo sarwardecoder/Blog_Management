@@ -1,14 +1,16 @@
+
+
 <template>
-  <div class="container py-4">
+<div class="container py-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h1 class="h2 mb-4">Edit User</h1>
+        <h1 class="h2 mb-4">Create New Post</h1>
         <div v-if="successMessage" class="alert alert-success mb-4">
           {{ successMessage }}
         </div>
         <form @submit.prevent="submit" class="mb-3">
           <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
+            <label for="username" class="form-label">Title</label>
             <input 
               id="username" 
               v-model="form.username" 
@@ -36,46 +38,53 @@
               v-model="form.password" 
               type="password" 
               class="form-control" 
-              placeholder="Leave blank to keep current password"
+              required 
+              minlength="8" 
             />
             <div v-if="errors.password" class="text-danger small mt-1">{{ errors.password }}</div>
+          </div>
+          <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirm Password</label>
+            <input 
+              id="password_confirmation" 
+              v-model="form.password_confirmation" 
+              type="password" 
+              class="form-control" 
+              required 
+              minlength="8" 
+            />
           </div>
           <button 
             type="submit" 
             :disabled="form.processing" 
             class="btn btn-primary w-100"
           >
-            <span v-if="form.processing">Updating...</span>
-            <span v-else>Update</span>
+            <span v-if="form.processing">Creating...</span>
+            <span v-else>Create</span>
           </button>
         </form>
       </div>
     </div>
   </div>
+    
 </template>
-
-<script setup>
+<script>
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true
-  }
-});
-
 const successMessage = ref('');
 const form = useForm({
-  username: props.user.username,
-  email: props.user.email,
-  password: ''
+  username: '',
+  email: '',
+  password: '',
+  password_confirmation: ''
 });
 
 const submit = () => {
-  form.put(`/users/${props.user.id}`, {
+  form.post('/users', {
     onSuccess: () => {
-      successMessage.value = 'User updated successfully!';
+      successMessage.value = 'User created successfully!';
+      form.reset();
     },
     onError: () => {
       successMessage.value = '';

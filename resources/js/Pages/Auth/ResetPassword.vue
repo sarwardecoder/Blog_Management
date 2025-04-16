@@ -40,7 +40,7 @@
 
 <script>
 import { reactive } from "vue";
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/vue3";
 
 export default {
     setup() {
@@ -49,7 +49,7 @@ export default {
         });
 
         function submit() {
-            Inertia.post("/forgot-password", form);
+            router.post("/forgot-password", form);
         }
 
         return { form, submit };

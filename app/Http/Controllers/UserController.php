@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\User;
@@ -17,11 +18,38 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function userLogin(Request $request)
     {
-        return Inertia::render('Users', [
-            'users' => User::all()
-        ]);    
+        $count=User::where('email',$request->input('email'))->where('password',
+        $request->input('password'))->select('id')->first();
+        if($count!==null){
+            // $token=JWTToken::createToken($request->input('email'),$count->id);
+           
+            // return response()->json([
+            //     'status'=>'success',
+            //     'message'=>'User Login successful',
+            //     'token'=>$token
+            // ],200)->cookie('token',$token,60*24*30);
+            $email=$request->input('email');
+            $user_id=$count->id;
+            $request->session()->put('email',$email);
+            $request->session()->put('user_id',$user_id);
+$data=['message'=>'User Login Successful','status'=>'true','error'=>''];
+return redirect('/dashboard')->with($data);
+   }else{
+            // return response([
+            //     'status'=>'failed',
+            //     'message'=>'unauthorized',
+            // ],200);
+$data=['message'=>'login failed','status'=>false,'error'=>''];
+return redirect('/login')->with($data);
+
+
+        }
+    }
+    public function confirmLogin()
+    {
+        return Inertia::render('Users/Login');    
     }
 
     /**

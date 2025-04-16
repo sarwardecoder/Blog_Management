@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LikeController;
@@ -13,7 +14,9 @@ use App\Http\Middleware\TokenVerificationMiddleware;
 // Public routes
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+Route::post('/loginForm', [UserController::class, 'userLoginForm']);
 Route::post('/login', [UserController::class, 'userLogin']);
+// Route::get('/login', [UserController::class, 'userLogin']);
 
 Route::get('/register', [UserController::class, 'create'])->name('register');
 Route::post('/register', [UserController::class, 'store']);
@@ -24,7 +27,7 @@ Route::post('/register', [UserController::class, 'store']);
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
 
 Route::middleware(TokenVerificationMiddleware::class)->group(function () {
-   
+
     // User Management Routes
 
     Route::post('/logout', [UserController::class, 'userLogout']);
@@ -35,7 +38,7 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
         Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-        
+
         Route::get('/{id}', [UserController::class, 'userProfile']);
         Route::post('/{id}/update', [UserController::class, 'updateUserProfile']);
         Route::delete('/{id}/delete', [UserController::class, 'deleteUserProfile']);
@@ -43,10 +46,10 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
         Route::post('/{id}/update-profile-picture', [UserController::class, 'updateUserProfilePicture']);
         Route::post('/{id}/update-cover-picture', [UserController::class, 'updateUserCoverPicture']);
     });
-    
+
     // Post Management Routes
     Route::prefix('posts')->group(function () {
-        Route::post('/create', [PostController::class, 'createPost']);
+        // Route::post('/posts/create', [PostController::class, 'createPost'])->name(posts.create);
         Route::get('/', [PostController::class, 'getAllPosts']);
         Route::get('/{id}', [PostController::class, 'getPostById']);
         Route::post('/{id}/update', [PostController::class, 'updatePost']);
@@ -106,8 +109,8 @@ Route::middleware(TokenVerificationMiddleware::class)->group(function () {
 
     // Category Management
     Route::prefix('categories')->group(function () {
-        Route::post('/create', [PostController::class, 'createCategory']);
-        Route::get('/', [PostController::class, 'listCategory']);
+        Route::post('/category/create', [CategoryController::class, 'createCategory']);
+        Route::get('/', [CategoryController::class, 'listCategory']);
     });
 
     // Notification routes

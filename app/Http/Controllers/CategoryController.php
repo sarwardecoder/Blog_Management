@@ -24,7 +24,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function store(Request $request): JsonResponse
+    public function createCategory(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories',
