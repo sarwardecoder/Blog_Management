@@ -1,21 +1,34 @@
 <?php
 
-use App\Http\Controllers\BookmarkController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 
 // Public routes
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::post('/loginForm', [UserController::class, 'userLoginForm']);
+// Route::post('/loginForm', [UserController::class, 'userLoginForm']);
+
+Route::get('/loginForm',function(){
+    return Inertia::render('/LoginForm');
+}
+);
+
+Route::get('/loginPage',function(){
+    return Inertia::render('/LoginPage');
+}
+);
+
 Route::post('/login', [UserController::class, 'userLogin']);
+
 // Route::get('/login', [UserController::class, 'userLogin']);
 
 Route::get('/register', [UserController::class, 'create'])->name('register');
